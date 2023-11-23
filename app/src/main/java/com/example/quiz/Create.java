@@ -30,6 +30,7 @@ public class Create {
         this.button4 = button4;
         this.photo= photo;
     }
+        //Utwórz pytanie.
         void createPytania(){
         questions= pytanias.get(tab[next]);
         next+=1;
@@ -41,6 +42,8 @@ public class Create {
         button4.setText(questions.getOdpowiedz4());
         photo.setBackgroundResource(questions.getImg());
     }
+
+    //Utwórz liczby indexy z pytaniami dostępnymi w grze.
     void createNums(){
         quests= new Integer[pytanias.size()];
         for (int i = 0; i < pytanias.size(); i++) {

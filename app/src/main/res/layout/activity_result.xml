@@ -20,12 +20,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
+            android:textColor="@color/black"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Koniec gry!"
             android:textSize="32sp"/>
         <TextView
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:id="@+id/result"
             android:layout_gravity="center"
@@ -40,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
+            android:textColor="@color/white"
             android:backgroundTint="@color/button"
             android:id="@+id/restart"
             android:layout_marginTop="12sp"

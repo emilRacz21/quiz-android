@@ -33,7 +33,16 @@ public class Result extends AppCompatActivity {
 
         result.setText("Odgadłeś " + points + " z " + length + " pytań!");
 
-        // Ustaw ranking w zależności od procentowej punktacji
+        setRanking(percentage);
+
+        //restart po skonczonej grze
+        restart.setOnClickListener(view -> {
+            Intent intent = new Intent(Result.this, MainActivity.class);
+            startActivity(intent);
+        });
+    }
+    // Ustaw ranking w zależności od procentowej punktacji
+    void setRanking(int percentage){
         if (percentage >= 90) {
             rank.setText("Ocena: 5");
             rank.setTextColor(ContextCompat.getColor(this, R.color.positive));
@@ -47,10 +56,5 @@ public class Result extends AppCompatActivity {
             rank.setText("Ocena: 2");
             rank.setTextColor(ContextCompat.getColor(this, R.color.negative));
         }
-
-        restart.setOnClickListener(view -> {
-            Intent intent = new Intent(Result.this, MainActivity.class);
-            startActivity(intent);
-        });
     }
 }

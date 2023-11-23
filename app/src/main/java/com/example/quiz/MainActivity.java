@@ -2,8 +2,11 @@ package com.example.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,10 +35,12 @@ public class MainActivity extends AppCompatActivity {
     Integer[] tab = new Integer[12];
     Set<Integer> usedIndexes = new HashSet<>();
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
             question = findViewById(R.id.question);
             photo = findViewById(R.id.photo);
@@ -48,14 +53,16 @@ public class MainActivity extends AppCompatActivity {
             button3 = findViewById(R.id.button3);
             button4 = findViewById(R.id.button4);
 
+            //Klasa create.
             create= new Create(pytanias, tab, questNumber, question,
                 button1, button2, button3, button4, photo);
 
             setPytaniaLogo();
             makeRandom();
             displayDialog();
-
         }
+
+        //Losowe indexowanie pytań.
         void makeRandom(){
             for (int i = 0; i < pytanias.size(); i++) {
                 int random;
@@ -67,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 tab[i] = random;
             }
         }
+    //Utwórz początkowy dialog do wybrania ilosci pytań.
     void displayDialog() {
         create.createNums();
         hide.setVisibility(View.GONE);
@@ -83,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         });
         dialog.show();
     }
+    //Utwórz adapter z dostępną liczbą pytań.
     void makeAdapter(Spinner setNums) {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, create.quests);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -98,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
+    //Rozpocznij grę.
     void startGame() {
         hide.setVisibility(View.VISIBLE);
         create.createPytania();
@@ -119,19 +129,19 @@ public class MainActivity extends AppCompatActivity {
                 startGame();
             }
         };
-
         button1.setOnClickListener(clickQuest);
         button2.setOnClickListener(clickQuest);
         button3.setOnClickListener(clickQuest);
         button4.setOnClickListener(clickQuest);
     }
+        //Przeslij do nowego activity swoje wyniki gry!.
         void yourResult() {
         Intent sendIntent = new Intent(MainActivity.this, Result.class);
         sendIntent.putExtra("length", create.endGame+1);
         sendIntent.putExtra("points",points);
         startActivity(sendIntent);
         }
-
+        //Ustaw pytania do quizu.
         void setPytaniaLogo() {
             pytanias.clear();
             pytanias.add(new Pytania("Co to za logo?",

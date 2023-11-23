@@ -13,18 +13,22 @@
         android:orientation="vertical">
 
         <TextView
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gra Quiz!"
             android:layout_gravity="center"
             android:textSize="53sp"/>
         <TextView
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="kliknij start aby rozpocząć grę!"/>
 
         <TextView
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +39,8 @@
             android:text="wybierz ilość pytań!"/>
 
         <Spinner
-            android:textAlignment="center"
+            android:popupBackground="@color/buttonsholder"
+            android:backgroundTint="@color/black"
             android:id="@+id/spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,9 +48,10 @@
             android:minHeight="48dp" />
 
         <Button
+            android:textColor="@color/white"
             android:id="@+id/startGame"
-            android:layout_width="120sp"
-            android:layout_height="wrap_content"
+            android:layout_width="160sp"
+            android:layout_height="70sp"
             android:layout_gravity="center"
             android:text="Start"
             android:textSize="22sp"
