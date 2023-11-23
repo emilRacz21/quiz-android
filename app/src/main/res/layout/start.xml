@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="340sp"
+    android:background="@color/buttonsholder"
+    android:orientation="vertical"
+    android:layout_height="640sp">
+
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gra Quiz!"
+            android:layout_gravity="center"
+            android:textSize="53sp"/>
+        <TextView
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kliknij start aby rozpocząć grę!"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_marginTop="32sp"
+            android:layout_marginBottom="12sp"
+            android:layout_gravity="center"
+            android:text="wybierz ilość pytań!"/>
+
+        <Spinner
+            android:textAlignment="center"
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minHeight="48dp" />
+
+        <Button
+            android:id="@+id/startGame"
+            android:layout_width="120sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Start"
+            android:textSize="22sp"
+            android:layout_marginTop="22sp"
+            android:backgroundTint="@color/blue"/>
+    </LinearLayout>
+
+</RelativeLayout>

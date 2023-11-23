@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#2196F3</color>
+    <color name="buttonsholder">#A0C3DF</color>
+    <color name="button">#5F91B8</color>
+    <color name="backkground">#A3BDD1</color>
+    <color name="radius">#B1C9DC</color>
+    <color name="radiusbackground">#47A2F1</color>
+    <color name="positive">#309C35</color>
+    <color name="negative">#C30000</color>
+    <color name="average">#AE6C09</color>
+
+</resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/quiz"
+    tools:context=".MainActivity">
+
+<LinearLayout
+    android:id="@+id/hide"
+    android:orientation="vertical"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textSize="26sp"
+        android:layout_marginTop="22sp"
+        android:id="@+id/questNumber"
+        android:layout_marginBottom="22sp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginBottom="52sp"
+        android:background="@drawable/radius"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="22sp"
+            android:id="@+id/isPositive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12sp"/>
+        <TextView
+            android:textSize="20sp"
+            android:gravity="center"
+            android:id="@+id/question"
+            android:layout_marginBottom="22sp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tutaj znajduje sie Pytanie"/>
+
+        <ImageView
+            android:layout_marginBottom="52sp"
+            android:layout_marginStart="62sp"
+            android:layout_marginEnd="62sp"
+            android:id="@+id/photo"
+            android:layout_gravity="center"
+            android:layout_width="180sp"
+            android:layout_height="180sp" />
+    </LinearLayout>
+
+    <GridLayout
+        android:background="@drawable/buttonsholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rowCount="2"
+        android:paddingBottom="17sp"
+        android:paddingLeft="17sp"
+        android:paddingRight="17sp"
+        android:paddingTop="17sp"
+        android:columnCount="2">
+
+        <Button
+            android:textSize="17sp"
+            android:layout_marginBottom="12sp"
+            android:layout_marginEnd="12sp"
+            android:id="@+id/button1"
+            android:backgroundTint="@color/button"
+            android:layout_height="120sp"
+            android:layout_width="200sp"
+            android:text="Pytanie 1" />
+        <Button
+            android:textSize="17sp"
+            android:id="@+id/button2"
+            android:backgroundTint="@color/button"
+            android:layout_height="120sp"
+            android:layout_width="200sp"
+            android:text="Pytanie 2" />
+        <Button
+            android:textSize="17sp"
+            android:id="@+id/button3"
+            android:backgroundTint="@color/button"
+            android:layout_height="120sp"
+            android:layout_width="200sp"
+            android:text="Pytanie 3" />
+        <Button
+            android:textSize="17sp"
+            android:id="@+id/button4"
+            android:backgroundTint="@color/button"
+            android:layout_height="120sp"
+            android:layout_width="200sp"
+            android:text="Pytanie 4" />
+    </GridLayout>
+
+</LinearLayout>
+
+</RelativeLayout>

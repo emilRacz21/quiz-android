@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/quiz"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".Result">
+
+    <LinearLayout
+        android:background="@drawable/radius"
+        android:paddingTop="102sp"
+        android:paddingRight="82sp"
+        android:paddingLeft="82sp"
+        android:paddingBottom="102sp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Koniec gry!"
+            android:textSize="32sp"/>
+        <TextView
+            android:textSize="18sp"
+            android:id="@+id/result"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Odgadłeś 3 z 10 pytan!"/>
+        <TextView
+            android:id="@+id/rank"
+            android:layout_gravity="center"
+            android:textSize="22sp"
+            android:layout_marginTop="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:backgroundTint="@color/button"
+            android:id="@+id/restart"
+            android:layout_marginTop="12sp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_width="160sp"
+            android:layout_height="70sp"
+            android:text="Restart"/>
+    </LinearLayout>
+
+</RelativeLayout>

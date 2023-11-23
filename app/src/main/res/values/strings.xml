@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Quiz</string>
+    <string name="zla_odpowiedz">Zła odpowiedź!</string>
+    <string name="poprawna_odpowiedz">Poprawna odpowiedź!</string>
+</resources>
