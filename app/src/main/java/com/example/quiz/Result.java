@@ -2,73 +2,75 @@ package com.example.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Result extends AppCompatActivity {
 
-    TextView result;
-    Button restart;
-    TextView rank;
-    String[] clickedOptions;
-    List<Pytania> pytanias;
-    ListView resultList;
-    int[] allQuestions;
+    TextView resultTextView;
+    Button restartButton;
+    TextView rankTextView;
+    String[] userAnswers;
+    List<Questions> questionsList;
+    ListView resultListView;
+    int[] correctAnswers;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        resultList = findViewById(R.id.resultList);
-        pytanias= (List<Pytania>) getIntent().getSerializableExtra("pytanias");
-        Intent getArray = getIntent();
-        allQuestions= getArray.getIntArrayExtra("allQuestions");
-        Bundle bundle = getIntent().getExtras();
-        assert bundle != null;
-        int points = bundle.getInt("points");
-        int length = bundle.getInt("length");
-        clickedOptions = bundle.getStringArray("answers");
 
-        result = findViewById(R.id.result);
-        restart = findViewById(R.id.restart);
-        rank = findViewById(R.id.rank);
+        resultListView = findViewById(R.id.resultList);
+        questionsList = (List<Questions>) getIntent().getSerializableExtra("logoQuestion");
+        Intent getIntent = getIntent();
+        correctAnswers = getIntent.getIntArrayExtra("allQuestions");
+        Bundle extras = getIntent().getExtras();
+        assert extras != null;
+        int userPoints = extras.getInt("points");
+        int totalQuestions = extras.getInt("length");
+        userAnswers = extras.getStringArray("answers");
 
-        // Oblicz procentową punktację
-        int percentage = (int) (((double) points / length) * 100);
+        resultTextView = findViewById(R.id.result);
+        restartButton = findViewById(R.id.restart);
+        rankTextView = findViewById(R.id.rank);
 
-        result.setText("Odgadłeś " + points + " z " + length + " pytań!");
+        // Calculate the percentage score
+        int percentage = (int) (((double) userPoints / totalQuestions) * 100);
+
+        resultTextView.setText("Odgadłeś " + userPoints + " z " + totalQuestions + " pytań!");
 
         setRanking(percentage);
-        CustomAdapter customAdapter = new CustomAdapter(pytanias, allQuestions, clickedOptions,this);
-        resultList.setAdapter(customAdapter);
-        //restart po skonczonej grze
-        restart.setOnClickListener(view -> {
+        System.out.println(questionsList.get(0).getCorrect());
+        CustomAdapter customAdapter = new CustomAdapter(totalQuestions, questionsList, correctAnswers, userAnswers, this);
+        resultListView.setAdapter(customAdapter);
+
+        // Restart the game
+        restartButton.setOnClickListener(view -> {
             Intent intent = new Intent(Result.this, MainActivity.class);
             startActivity(intent);
         });
     }
-    // Ustaw ranking w zależności od procentowej punktacji
-    void setRanking(int percentage){
+
+    // Set the rank based on the percentage score
+    void setRanking(int percentage) {
         if (percentage >= 90) {
-            rank.setText(R.string.ocena5);
-            rank.setTextColor(ContextCompat.getColor(this, R.color.positive));
+            rankTextView.setText(R.string.grade5);
+            rankTextView.setTextColor(ContextCompat.getColor(this, R.color.positive));
         } else if (percentage >= 70) {
-            rank.setText(R.string.ocena4);
-            rank.setTextColor(ContextCompat.getColor(this, R.color.positive));
+            rankTextView.setText(R.string.grade4);
+            rankTextView.setTextColor(ContextCompat.getColor(this, R.color.positive));
         } else if (percentage >= 50) {
-            rank.setText(R.string.ocena3);
-            rank.setTextColor(ContextCompat.getColor(this, R.color.average));
+            rankTextView.setText(R.string.grade3);
+            rankTextView.setTextColor(ContextCompat.getColor(this, R.color.average));
         } else {
-            rank.setText(R.string.ocena2);
-            rank.setTextColor(ContextCompat.getColor(this, R.color.negative));
+            rankTextView.setText(R.string.grade2);
+            rankTextView.setTextColor(ContextCompat.getColor(this, R.color.negative));
         }
     }
 }

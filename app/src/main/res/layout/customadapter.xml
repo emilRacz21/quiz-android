@@ -18,21 +18,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginBottom="12sp"
                 android:id="@+id/titleQuest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22sp"
-                android:text="Treść pytania"
+                android:text="Treść questions"
                 android:textSize="26sp" />
                 <TextView
+                    android:textColor="@color/black"
                     android:layout_marginStart="32sp"
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Poprawna odpowiedź:" />
                 <TextView
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_marginStart="32sp"
                     android:textSize="26sp"
@@ -42,6 +45,7 @@
                     android:text="odpowiedź" />
 
                 <TextView
+                    android:textColor="@color/black"
                     android:layout_marginStart="32sp"
                     android:textSize="18sp"
                     android:layout_width="wrap_content"
@@ -49,6 +53,7 @@
                     android:text="Twoja odpowiedź:" />
 
                 <TextView
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_marginStart="32sp"
                     android:textSize="26sp"

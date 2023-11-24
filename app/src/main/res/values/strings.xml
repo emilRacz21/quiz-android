@@ -3,8 +3,8 @@
     <string name="zla_odpowiedz">Zła odpowiedź!</string>
     <string name="poprawna_odpowiedz">Poprawna odpowiedź!</string>
     <string name="empty">  </string>
-    <string name="ocena5">Ocena 5</string>
-    <string name="ocena4">Ocena 4</string>
-    <string name="ocena3">Ocena 3</string>
-    <string name="ocena2">Ocena 2</string>
+    <string name="grade5">Ocena 5</string>
+    <string name="grade4">Ocena 4</string>
+    <string name="grade3">Ocena 3</string>
+    <string name="grade2">Ocena 2</string>
 </resources>

@@ -8,25 +8,29 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.core.content.ContextCompat;
+
 import java.util.List;
 
 public class CustomAdapter  extends BaseAdapter {
-    List<Pytania> questions;
+    List<Questions> questions;
     int[] allQuestions;
     String[] clickedOptions;
     LayoutInflater inflater;
     Context context;
-    CustomAdapter(List<Pytania> questions, int[] allQuestions, String[] clickedOptions, Context context){
+    int adapterLength;
+    CustomAdapter(int adapterLength, List<Questions> questions, int[] allQuestions, String[] clickedOptions, Context context){
         this.questions = questions;
         this.allQuestions = allQuestions;
         this.clickedOptions = clickedOptions;
         this.context = context;
+        this.adapterLength = adapterLength;
         inflater = LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
-        return clickedOptions.length;
+        return adapterLength;
     }
 
     @Override
@@ -44,26 +48,31 @@ public class CustomAdapter  extends BaseAdapter {
 
     //Ustawiam layout dla mojego custom adaptera.
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
+        if (convertView == null)
             convertView = inflater.inflate(R.layout.customadapter, parent, false);
-        }
 
-        Pytania pytania = questions.get(allQuestions[position]);
+        Questions myQuest = questions.get(allQuestions[position+1]);
         TextView titleQuest = convertView.findViewById(R.id.titleQuest);
-        titleQuest.setText((position+1)+". "+pytania.getTresc());
+        titleQuest.setText((position+1)+". "+ myQuest.getContentQuestion());
 
         TextView yourAnswer = convertView.findViewById(R.id.yourChoice);
         yourAnswer.setText(clickedOptions[position]);
-        yourAnswer.setTextColor(ContextCompat.getColor(context,R.color.button));
 
         TextView goodChoice = convertView.findViewById(R.id.goodChoice);
-        goodChoice.setText(pytania.getPoprawna());
-        goodChoice.setTextColor(ContextCompat.getColor(context,R.color.positive));
+        goodChoice.setText(myQuest.getCorrect());
+
+        setPositiveOrNegativeColor(yourAnswer, myQuest, position);
 
         ImageView imageResult = convertView.findViewById(R.id.imageResult);
-        imageResult.setBackgroundResource(pytania.getImg());
+        imageResult.setBackgroundResource(myQuest.getImg());
 
         return convertView;
     }
 
+    //Ustaw kolor wybranej przez ciebie odpowiedzi.
+    void setPositiveOrNegativeColor(TextView yourAnswer, Questions questions, int position){
+        yourAnswer.setTextColor(questions.getCorrect().equals(clickedOptions[position]) ?
+                ContextCompat.getColor(context, R.color.positive) :
+                ContextCompat.getColor(context, R.color.negative));
+    }
 }
