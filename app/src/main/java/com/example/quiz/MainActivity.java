@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     int time;
     TextView timerText;
     Handler timeCount;
+    boolean isTimerEnabled = true;
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                             if (time == 0) {
                                 yourResult();
                                 timeCount.removeCallbacks(this); // Zatrzymaj odliczanie
-                            } else {
+                            } else if (isTimerEnabled){
                                 timerText.setText(time + " s.");
                                 timeCount.postDelayed(this, 1000);
                             }
@@ -191,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //Przeslij do nowego activity swoje wyniki gry!.
         void yourResult() {
+            isTimerEnabled = false;
             Intent sendIntent = new Intent(MainActivity.this, Result.class);
             sendIntent.putExtra("length", quizManager.getEndGame()+1);
             sendIntent.putExtra("points",points);
