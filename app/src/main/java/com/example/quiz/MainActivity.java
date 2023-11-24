@@ -41,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
     String[] selectedOptions = new String[allQuestions.length];
     int currentIndex = 0;
     boolean isClickable;
-
+    int time;
+    TextView timerText;
+    Handler timeCount;
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         questionContentText = findViewById(R.id.questNumber);
         hideLayout = findViewById(R.id.hide);
         questAnimation = findViewById(R.id.questAnimation);
+        timerText = findViewById(R.id.timerText);
 
         int[] id = {R.id.button1, R.id.button2, R.id.button3, R.id.button4};
         for (int i = 0; i < answerButtons.length ; i++)  answerButtons[i] = findViewById(id[i]);
@@ -114,7 +117,9 @@ public class MainActivity extends AppCompatActivity {
         }
         //Rozpocznij grę.
         void startGame() {
+            time = 60;
             hideLayout.setVisibility(View.VISIBLE);
+            makeTime();
             animate(Techniques.Bounce, 1000, 1,questAnimation);
             quizManager.createQuestions();
             isClickable = true;
@@ -125,6 +130,32 @@ public class MainActivity extends AppCompatActivity {
                 isClickable = false;
             };
             for (Button button : answerButtons) button.setOnClickListener(clickQuest);
+        }
+        //czas na podjecie odpowiedzi w grze.
+        void makeTime() {
+            if (timeCount == null) {
+                timeCount = new Handler();
+                timeCount.post(new Runnable() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void run() {
+                        timerText.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.black));
+                        if (time > 0) {
+                            time--;
+                            if(time <=10){
+                                timerText.setTextColor(ContextCompat.getColor(getApplicationContext(),R.color.negative));
+                            }
+                            if (time == 0) {
+                                yourResult();
+                                timeCount.removeCallbacks(this); // Zatrzymaj odliczanie
+                            } else {
+                                timerText.setText(time + " s.");
+                                timeCount.postDelayed(this, 1000);
+                            }
+                        }
+                    }
+                });
+            }
         }
         //Ustaw kolory początkowe gdy juz klikne odpowiedź.
         void setStartColors(){

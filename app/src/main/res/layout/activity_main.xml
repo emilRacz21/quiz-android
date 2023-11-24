@@ -15,9 +15,25 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <TextView
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pozostały czas"
+        android:layout_gravity="center"/>
+    <TextView
+        android:text="59 s."
+        android:textColor="@color/black"
+        android:textSize="27sp"
+        android:id="@+id/timerText"
+        android:layout_marginBottom="1sp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
         android:textColor="@color/black"
         android:textSize="26sp"
-        android:layout_marginTop="22sp"
+        android:layout_marginTop="12sp"
         android:id="@+id/questNumber"
         android:layout_marginBottom="22sp"
         android:layout_gravity="center"
