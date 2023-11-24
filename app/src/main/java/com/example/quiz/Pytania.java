@@ -1,6 +1,8 @@
 package com.example.quiz;
 
-public class Pytania {
+import java.io.Serializable;
+
+public class Pytania implements Serializable {
     private final String tresc;
     private final String odpowiedz1;
     private final String odpowiedz2;

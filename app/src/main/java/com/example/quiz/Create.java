@@ -1,4 +1,5 @@
 package com.example.quiz;
+import android.annotation.SuppressLint;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,40 +8,35 @@ import java.util.List;
 
 public class Create {
     List<Pytania> pytanias;
-    Integer[] tab;
+    int[] tab;
     int next;
     TextView questNumber;
     TextView question;
-    Button button1;
-    Button button2;
-    Button button3;
-    Button button4;
     Pytania questions;
     ImageView photo;
     Integer[] quests;
+    Button[] buttons;
     int endGame;
-    Create( List<Pytania> pytanias,  Integer[] tab,TextView questNumber,TextView question, Button button1, Button button2, Button button3, Button button4 ,ImageView photo){
+    Create( List<Pytania> pytanias,  int[] tab,TextView questNumber,TextView question,Button[] buttons ,ImageView photo){
         this.pytanias = pytanias;
         this.tab = tab;
         this.question = question;
         this.questNumber = questNumber;
-        this.button1 = button1;
-        this.button2 = button2;
-        this.button3 = button3;
-        this.button4 = button4;
+        this.buttons = buttons;
         this.photo= photo;
     }
         //Utwórz pytanie.
+        @SuppressLint("SetTextI18n")
         void createPytania(){
-        questions= pytanias.get(tab[next]);
-        next+=1;
-        questNumber.setText("Pytanie "+ next+ " z "+ (endGame+1));
-        question.setText(questions.getTresc());
-        button1.setText(questions.getOdpowiedz1());
-        button2.setText(questions.getOdpowiedz2());
-        button3.setText(questions.getOdpowiedz3());
-        button4.setText(questions.getOdpowiedz4());
-        photo.setBackgroundResource(questions.getImg());
+            next+=1;
+            questions= pytanias.get(tab[next]);
+            questNumber.setText("Pytanie "+ next+ " z "+ (endGame+1));
+            question.setText(questions.getTresc());
+            photo.setBackgroundResource(questions.getImg());
+            buttons[0].setText(questions.getOdpowiedz1());
+            buttons[1].setText(questions.getOdpowiedz2());
+            buttons[2].setText(questions.getOdpowiedz3());
+            buttons[3].setText(questions.getOdpowiedz4());
     }
 
     //Utwórz liczby indexy z pytaniami dostępnymi w grze.

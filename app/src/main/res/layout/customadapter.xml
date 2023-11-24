@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/radius"
+    android:layout_height="wrap_content">
+
+    <GridLayout
+        android:paddingTop="22sp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rowCount="2"
+        android:paddingBottom="22sp"
+        android:columnCount="2">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:textStyle="bold"
+                android:layout_marginBottom="12sp"
+                android:id="@+id/titleQuest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22sp"
+                android:text="Treść pytania"
+                android:textSize="26sp" />
+                <TextView
+                    android:layout_marginStart="32sp"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Poprawna odpowiedź:" />
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_marginStart="32sp"
+                    android:textSize="26sp"
+                    android:id="@+id/goodChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="odpowiedź" />
+
+                <TextView
+                    android:layout_marginStart="32sp"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Twoja odpowiedź:" />
+
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_marginStart="32sp"
+                    android:textSize="26sp"
+                    android:id="@+id/yourChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="odpowiedź" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageResult"
+            android:layout_marginStart="22sp"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="22sp"
+            android:layout_width="120sp"
+            android:layout_height="120sp" />
+    </GridLayout>
+
+
+</LinearLayout>

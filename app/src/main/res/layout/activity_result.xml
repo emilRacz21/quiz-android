@@ -7,8 +7,8 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Result">
-
     <LinearLayout
+        android:id="@+id/below"
         android:background="@drawable/radius"
         android:paddingTop="102sp"
         android:paddingRight="82sp"
@@ -52,5 +52,12 @@
             android:layout_height="70sp"
             android:text="Restart"/>
     </LinearLayout>
-
+        <ListView
+            android:layout_marginStart="16sp"
+            android:layout_marginEnd="16sp"
+            android:layout_marginTop="32sp"
+            android:layout_below="@id/below"
+            android:id="@+id/resultList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 </RelativeLayout>

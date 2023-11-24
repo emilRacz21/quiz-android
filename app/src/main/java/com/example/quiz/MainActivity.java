@@ -2,12 +2,12 @@ package com.example.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,41 +26,41 @@ public class MainActivity extends AppCompatActivity {
     List<Pytania> pytanias = new ArrayList<>();
     TextView question;
     ImageView photo;
-    Button button1; Button button2; Button button3; Button button4;
+    Button[] buttons = new Button[4];
     TextView questNumber;
     TextView postiveText;
     LinearLayout hide;
     ArrayAdapter<Integer> adapter;
     int points = 0;
     Create create;
-    Integer[] tab = new Integer[12];
+    int[] allQuestions = new int[12];
     Set<Integer> usedIndexes = new HashSet<>();
+    String[] clickedOptions = new String[allQuestions.length];
+    int index = 0;
+    boolean isClicable;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-            question = findViewById(R.id.question);
-            photo = findViewById(R.id.photo);
-            postiveText = findViewById(R.id.isPositive);
-            questNumber = findViewById(R.id.questNumber);
-            hide = findViewById(R.id.hide);
+        question = findViewById(R.id.question);
+        photo = findViewById(R.id.photo);
+        postiveText = findViewById(R.id.isPositive);
+        questNumber = findViewById(R.id.questNumber);
+        hide = findViewById(R.id.hide);
 
-            button1 = findViewById(R.id.button1);
-            button2 = findViewById(R.id.button2);
-            button3 = findViewById(R.id.button3);
-            button4 = findViewById(R.id.button4);
+        int[] id = {R.id.button1, R.id.button2, R.id.button3, R.id.button4};
+        for (int i = 0 ; i < buttons.length ; i++)  buttons[i] = findViewById(id[i]);
 
-            //Klasa create.
-            create= new Create(pytanias, tab, questNumber, question,
-                button1, button2, button3, button4, photo);
+        //Klasa create.
+        create= new Create(pytanias, allQuestions, questNumber, question, buttons, photo);
 
-            setPytaniaLogo();
-            makeRandom();
-            displayDialog();
+        setPytaniaLogo();
+        makeRandom();
+        displayDialog();
         }
 
         //Losowe indexowanie pytań.
@@ -70,76 +71,95 @@ public class MainActivity extends AppCompatActivity {
                     random = (int) Math.round(Math.random() * (pytanias.size() - 1));
                 } while (usedIndexes.contains(random));
                 usedIndexes.add(random);
-                System.out.println(random);
-                tab[i] = random;
+                allQuestions[i] = random;
             }
         }
-    //Utwórz początkowy dialog do wybrania ilosci pytań.
-    void displayDialog() {
-        create.createNums();
-        hide.setVisibility(View.GONE);
-        Dialog dialog = new Dialog(this);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.start);
-        Spinner setNums = dialog.findViewById(R.id.spinner);
-        makeAdapter(setNums);
+        //Utwórz początkowy dialog do wybrania ilosci pytań.
+        void displayDialog() {
+            create.createNums();
+            hide.setVisibility(View.GONE);
+            Dialog dialog = new Dialog(this);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.start);
+            Spinner setNums = dialog.findViewById(R.id.spinner);
+            makeAdapter(setNums);
+            Button begin = dialog.findViewById(R.id.startGame);
+            begin.setOnClickListener(view -> {
+                startGame();
+                dialog.dismiss();
+            });
+            dialog.show();
+        }
+        //Utwórz adapter z dostępną liczbą pytań.
+        void makeAdapter(Spinner setNums) {
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, create.quests);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            setNums.setAdapter(adapter);
+            setNums.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    adapter.notifyDataSetChanged();
+                    create.endGame = position;
+                }
 
-        Button begin = dialog.findViewById(R.id.startGame);
-        begin.setOnClickListener(view -> {
-            startGame();
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
-    //Utwórz adapter z dostępną liczbą pytań.
-    void makeAdapter(Spinner setNums) {
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, create.quests);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        setNums.setAdapter(adapter);
-        setNums.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                adapter.notifyDataSetChanged();
-                create.endGame = position;
-            }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });
+        }
+        //Rozpocznij grę.
+        void startGame() {
+            hide.setVisibility(View.VISIBLE);
+            create.createPytania();
+            isClicable= true;
+            setStartColors();
+            Handler next  = new Handler();
+            View.OnClickListener clickQuest = v -> {
+                if(isClicable) clickedButton(v, next);
+                isClicable = false;
+            };
+            for (Button button : buttons) button.setOnClickListener(clickQuest);
+        }
+        //Ustaw kolory początkowe gdy juz klikne odpowiedź.
+        void setStartColors(){
+            for (Button button : buttons) button.setBackgroundColor(ContextCompat.getColor(this, R.color.button));
+            postiveText.setText(R.string.empty);
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-    }
-    //Rozpocznij grę.
-    void startGame() {
-        hide.setVisibility(View.VISIBLE);
-        create.createPytania();
-        View.OnClickListener clickQuest = v -> {
+        //Operacja po kliknieciu przycisku.
+        void clickedButton(View v, Handler next){
             Button clicked = findViewById(v.getId());
+            clickedOptions[index] = String.valueOf(clicked.getText());
             if (clicked.getText().equals(create.questions.getPoprawna())) {
-                postiveText.setText(R.string.poprawna_odpowiedz);
-                postiveText.setTextColor(ContextCompat.getColor(this, R.color.positive));
+                setPositiveOrNegativeColor(R.color.positive, R.string.poprawna_odpowiedz, clicked);
                 points += 1;
             } else {
-                postiveText.setText(R.string.zla_odpowiedz);
-                postiveText.setTextColor(ContextCompat.getColor(this, R.color.negative));
+                setPositiveOrNegativeColor(R.color.negative, R.string.zla_odpowiedz, clicked);
             }
-
-
             if (create.next > create.endGame) {
                 yourResult();
             } else {
-                startGame();
+                clicked.setClickable(false);
+                next.postDelayed(() -> {
+                    index += 1;
+                    startGame();
+                }, 1000);
             }
-        };
-        button1.setOnClickListener(clickQuest);
-        button2.setOnClickListener(clickQuest);
-        button3.setOnClickListener(clickQuest);
-        button4.setOnClickListener(clickQuest);
-    }
+        }
+        //Ustaw kolory w zależności jaka jest odpowiedź.
+        void setPositiveOrNegativeColor(int color, int string, Button clicked){
+            clicked.setBackgroundColor(ContextCompat.getColor(this, color));
+            postiveText.setText(string);
+            postiveText.setTextColor(ContextCompat.getColor(this, color));
+        }
         //Przeslij do nowego activity swoje wyniki gry!.
         void yourResult() {
-        Intent sendIntent = new Intent(MainActivity.this, Result.class);
-        sendIntent.putExtra("length", create.endGame+1);
-        sendIntent.putExtra("points",points);
-        startActivity(sendIntent);
+            Intent sendIntent = new Intent(MainActivity.this, Result.class);
+            sendIntent.putExtra("length", create.endGame+1);
+            sendIntent.putExtra("points",points);
+            sendIntent.putExtra("answers",clickedOptions);
+            sendIntent.putExtra("pytanias", (Serializable) pytanias);
+            sendIntent.putExtra("allQuestions", allQuestions);
+            startActivity(sendIntent);
         }
         //Ustaw pytania do quizu.
         void setPytaniaLogo() {
@@ -156,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     "Google", "Microsoft", "Apple", "Samsung",
                     "Apple",R.drawable.apple_logo));
 
-            pytanias.add(new Pytania("Co to za marka samochodu?",
+            pytanias.add(new Pytania("Co to za logo?",
                     "Chevrolet", "Honda", "Ford", "Toyota",
                     "Toyota",R.drawable.toyota_logo));
 
